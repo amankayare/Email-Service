@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.Core", "EmailService.Core\EmailService.Core.csproj", "{CC6EA8F6-A8EA-43FE-8D2C-DC88F871C563}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.Infrastructure", "EmailService.Infrastructure\EmailService.Infrastructure.csproj", "{CFD807E7-56C6-42C0-8E3D-2A0BDB5657BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.API", "EmailService.API\EmailService.API.csproj", "{EE86882B-5346-48E8-8133-792FCA867B57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.Worker", "EmailService.Worker\EmailService.Worker.csproj", "{C104F220-599A-4269-AD79-7966BECC4438}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC6EA8F6-A8EA-43FE-8D2C-DC88F871C563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC6EA8F6-A8EA-43FE-8D2C-DC88F871C563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC6EA8F6-A8EA-43FE-8D2C-DC88F871C563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC6EA8F6-A8EA-43FE-8D2C-DC88F871C563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD807E7-56C6-42C0-8E3D-2A0BDB5657BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD807E7-56C6-42C0-8E3D-2A0BDB5657BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD807E7-56C6-42C0-8E3D-2A0BDB5657BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD807E7-56C6-42C0-8E3D-2A0BDB5657BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE86882B-5346-48E8-8133-792FCA867B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE86882B-5346-48E8-8133-792FCA867B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE86882B-5346-48E8-8133-792FCA867B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE86882B-5346-48E8-8133-792FCA867B57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C104F220-599A-4269-AD79-7966BECC4438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C104F220-599A-4269-AD79-7966BECC4438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C104F220-599A-4269-AD79-7966BECC4438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C104F220-599A-4269-AD79-7966BECC4438}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
