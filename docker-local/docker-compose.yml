@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:alpine
+    container_name: email-redis-local
+    ports:
+      - "6379:6379"
+
+  email-api:
+    build:
+      context: ..
+      dockerfile: docker-local/Dockerfile.api
+    container_name: email-api-local
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__Redis=redis:6379,abortConnect=false
+      - ApiKey=${API_KEY}
+      - Dashboard__ApiKey=${DASHBOARD_API_KEY}
+      - EmailSettings__Provider=${EMAIL_PROVIDER}
+      - EmailSettings__FromEmail=${FROM_EMAIL}
+      - EmailSettings__SendGridApiKey=${SENDGRID_API_KEY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    depends_on:
+      - redis
+
+  email-worker:
+    build:
+      context: ..
+      dockerfile: docker-local/Dockerfile.worker
+    container_name: email-worker-local
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Redis=redis:6379,abortConnect=false
+      - EmailSettings__Provider=${EMAIL_PROVIDER}
+      - EmailSettings__FromEmail=${FROM_EMAIL}
+      - EmailSettings__SendGridApiKey=${SENDGRID_API_KEY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    depends_on:
+      - redis

@@ -4,18 +4,20 @@ services:
   redis:
     image: redis:alpine
     container_name: email-redis
+    restart: unless-stopped
+    volumes:
+      - email_redis_data:/data
     ports:
       - "6379:6379"
 
   email-api:
     build:
-      context: .
-      dockerfile: EmailService.API/Dockerfile
+      context: ..
+      dockerfile: docker-prod/Dockerfile.api
     container_name: email-api
-    ports:
-      - "8080:8080"
+    restart: unless-stopped
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__Redis=redis:6379
       - ApiKey=${API_KEY}
@@ -31,11 +33,12 @@ services:
 
   email-worker:
     build:
-      context: .
-      dockerfile: EmailService.Worker/Dockerfile
+      context: ..
+      dockerfile: docker-prod/Dockerfile.worker
     container_name: email-worker
+    restart: unless-stopped
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__Redis=redis:6379
       - EmailSettings__Provider=${EMAIL_PROVIDER}
       - EmailSettings__FromEmail=${FROM_EMAIL}
@@ -45,3 +48,22 @@ services:
       - AWS_REGION=${AWS_REGION}
     depends_on:
       - redis
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: email-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - email_caddy_data:/data
+      - email_caddy_config:/config
+    depends_on:
+      - email-api
+
+volumes:
+  email_redis_data:
+  email_caddy_data:
+  email_caddy_config:

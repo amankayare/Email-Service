@@ -1,0 +1,20 @@
+# Email Microservice Production Caddyfile
+email.amankayare.com {
+    log {
+        output file /data/caddy_access.log
+    }
+
+    reverse_proxy email-api:8080 {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    header {
+        Permissions-Policy interest-cohort=()
+        Strict-Transport-Security max-age=31536000;
+        X-Frame-Options DENY
+        X-Content-Type-Options nosniff
+        -Server
+    }
+}
