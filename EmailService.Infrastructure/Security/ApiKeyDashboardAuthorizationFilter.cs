@@ -29,12 +29,19 @@ namespace EmailService.Infrastructure.Security
                 return false;
             }
 
-            if (!httpContext.Request.Headers.TryGetValue("X-API-Key", out var extractedKey))
+            // 1. Check Header (for programmatic access)
+            if (httpContext.Request.Headers.TryGetValue("X-API-Key", out var headerKey))
             {
-                return false;
+                if (_apiKey == headerKey) return true;
             }
 
-            return _apiKey == extractedKey;
+            // 2. Check Query String (for browser access)
+            if (httpContext.Request.Query.TryGetValue("api_key", out var queryKey))
+            {
+                if (_apiKey == queryKey) return true;
+            }
+
+            return false;
         }
     }
 }
