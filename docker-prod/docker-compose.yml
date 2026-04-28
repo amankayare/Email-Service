@@ -7,8 +7,8 @@ services:
     restart: unless-stopped
     volumes:
       - email_redis_data:/data
-    ports:
-      - "6379:6379"
+    networks:
+      - internal-email
 
   email-api:
     build:
@@ -30,6 +30,9 @@ services:
       - AWS_REGION=${AWS_REGION}
     depends_on:
       - redis
+    networks:
+      - web-network
+      - internal-email
 
   email-worker:
     build:
@@ -48,22 +51,14 @@ services:
       - AWS_REGION=${AWS_REGION}
     depends_on:
       - redis
+    networks:
+      - internal-email
 
-  caddy:
-    image: caddy:2-alpine
-    container_name: email-caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - email_caddy_data:/data
-      - email_caddy_config:/config
-    depends_on:
-      - email-api
+networks:
+  web-network:
+    external: true
+  internal-email:
+    driver: bridge
 
 volumes:
   email_redis_data:
-  email_caddy_data:
-  email_caddy_config:
