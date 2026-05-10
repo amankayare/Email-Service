@@ -1,3 +1,4 @@
+name: email-service
 services:
   redis:
     image: redis:alpine
